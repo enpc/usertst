@@ -3,9 +3,11 @@ package com.example.rest.dao;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 @Entity
-public class Userr {
+@Table(name="users")
+public class User {
 
     @Id
     @GeneratedValue
@@ -15,10 +17,10 @@ public class Userr {
 
     private Boolean active;
 
-    public Userr() {
+    public User() {
     }
 
-    public Userr(String name, Boolean active) {
+    public User(String name, Boolean active) {
         this.name = name;
         this.active = active;
     }
