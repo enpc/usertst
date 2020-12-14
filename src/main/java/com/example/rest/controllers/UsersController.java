@@ -20,12 +20,8 @@ public class UsersController {
 
     @GetMapping("/{id}")
     private User getUser(@PathVariable("id") Long id){
-        var user =  repository.findById(id);
-        if (user.isPresent()) {
-            return user.get();
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found");
-        }
+        return repository.findById(id)
+                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
     @GetMapping
