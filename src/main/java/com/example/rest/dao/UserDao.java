@@ -12,6 +12,7 @@ import com.example.rest.services.User;
 @Table(name="users")
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class UserDao implements User {
 
     @Id

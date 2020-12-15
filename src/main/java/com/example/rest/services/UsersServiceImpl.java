@@ -17,6 +17,11 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public UserDao create(String name) {
+
+        if ((name == null) || (name.isEmpty())){
+            throw new IllegalArgumentException("name can't be empty");
+        }
+
         var user = new UserDao();
         user.setName(name);
         user.setActive(true);
@@ -34,4 +39,5 @@ public class UsersServiceImpl implements UsersService {
     public Optional<User> getById(Long id) {
         return  repository.findById(id).map(User.class::cast);
     }
+
 }
