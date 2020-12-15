@@ -1,6 +1,6 @@
 package com.example.rest.controllers;
 
-import com.example.rest.dao.User;
+import com.example.rest.services.User;
 import com.example.rest.services.UsersService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
