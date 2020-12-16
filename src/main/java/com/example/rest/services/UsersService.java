@@ -7,4 +7,11 @@ public interface UsersService {
 
     Iterable<User> getAll();
     Optional<User> getById(Long id);
+    Boolean userCanLogging(String name);
+
+    User updateUserData(Long id, UserDataRequest request);
+    User activateUser(Long id);
+    User deactivateUser(Long id);
+
+    void deleteUser(Long user);
 }

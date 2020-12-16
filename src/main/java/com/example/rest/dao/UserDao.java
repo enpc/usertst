@@ -2,11 +2,10 @@ package com.example.rest.dao;
 
 import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 import com.example.rest.services.User;
+import net.bytebuddy.implementation.bind.MethodDelegationBinder;
 
 @Entity
 @Table(name="users")
@@ -19,6 +18,7 @@ public class UserDao implements User {
     @GeneratedValue
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     private Boolean active;
