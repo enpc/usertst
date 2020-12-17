@@ -1,6 +1,9 @@
 package com.example.rest.controllers;
 
 import com.example.rest.services.UsersService;
+import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,6 +23,7 @@ public class LoginController {
     @Autowired
     private UsersService usersService;
 
+    @ApiOperation(value = "Login user by name", notes = "Return code 200 if user can be logged in")
     @GetMapping()
     void login( @RequestBody @Valid LoginController.LoginRequest loginRequest){
         if (!usersService.userCanLogging(loginRequest.getName())){
@@ -29,6 +33,7 @@ public class LoginController {
 
     @Data
     static class LoginRequest {
+        @ApiModelProperty(value = "User name",example = "User")
         @NotBlank
         String name;
     }
