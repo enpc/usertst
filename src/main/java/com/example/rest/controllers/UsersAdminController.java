@@ -1,17 +1,13 @@
 package com.example.rest.controllers;
 
-import com.example.rest.services.UserDataRequest;
-import com.example.rest.services.User;
-import com.example.rest.services.UsersService;
+import com.example.rest.services.*;
 import io.swagger.annotations.ApiOperation;
-import lombok.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotBlank;
 
 @RestController
 @RequestMapping("/admin")
@@ -48,7 +44,8 @@ public class UsersAdminController {
     @ApiOperation(value = "Activate user")
     @PostMapping("/{id}/activate")
     public User activateUser(@PathVariable("id") Long id){
-        return usersService.activateUser(id);
+        throw new UserNotFoundException("");
+     //   return usersService.activateUser(id);
     }
 
     @ApiOperation(value = "Deactivate user")
@@ -61,5 +58,16 @@ public class UsersAdminController {
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable("id") Long id){
         usersService.deleteUser(id);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
+    public void notFoundExceptionHandler(){
+
+    }
+
+    @ExceptionHandler(UserParametersException.class)
+    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
+    public void userParametersExceptionHandler(){
     }
 }

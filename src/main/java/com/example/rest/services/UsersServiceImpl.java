@@ -5,9 +5,10 @@ import com.example.rest.dao.UsersRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Component
 public class UsersServiceImpl implements UsersService {
@@ -17,8 +18,8 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public UserDao create(String name) {
-        if ((name == null) || (name.isEmpty())){
-            throw new IllegalArgumentException("name can't be empty");
+        if ((name == null) || (name.isEmpty())) {
+            throw new UserParametersException("name can't be empty");
         }
 
         var user = new UserDao();
@@ -48,19 +49,17 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public User updateUserData(Long id, UserDataRequest request) {
-        var user = repository.getOne(id);
-        user.setName(request.getName());
-        return repository.save(user);
+        return changeUser(id, usr -> usr.setName(request.getName()));
     }
 
     @Override
     public User activateUser(Long id) {
-        return setUserActive(id, true);
+        return changeUser(id, usr -> usr.setActive(true));
     }
 
     @Override
     public User deactivateUser(Long id) {
-        return setUserActive(id, false);
+        return changeUser(id, usr -> usr.setActive(false));
     }
 
     @Override
@@ -68,9 +67,9 @@ public class UsersServiceImpl implements UsersService {
         repository.deleteById(id);
     }
 
-    private User setUserActive(Long id, Boolean active){
+    private User changeUser(Long id, Consumer<UserDao> operation){
         var user = repository.getOne(id);
-        user.setActive(active);
+        operation.accept(user);
         return repository.save(user);
     }
 }
