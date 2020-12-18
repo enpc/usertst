@@ -46,7 +46,7 @@ class UsersServiceImplTest {
     void create_emptyName() {
         Mockito.when(usersRepository.save(any())).then(arg -> arg.getArgument(0));
 
-        Assert.assertThrows(UserNotFoundException.class,() -> usersService.create(""));
+        Assert.assertThrows(UserParametersException.class,() -> usersService.create(""));
     }
 
     @Test
