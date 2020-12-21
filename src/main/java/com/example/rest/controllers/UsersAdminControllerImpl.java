@@ -27,28 +27,28 @@ public class UsersAdminControllerImpl implements UsersAdminController {
     }
 
     @Override
-    public User getUser(@PathVariable("id") Long id) {
+    public User getUser(Long id) {
         return usersService.getById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
     }
 
     @Override
-    public User updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserDataRequest userDataRequest) {
+    public User updateUser(Long id,UserDataRequest userDataRequest) {
         return usersService.updateUserData(id, userDataRequest);
     }
 
     @Override
-    public User activateUser(@PathVariable("id") Long id) {
+    public User activateUser(Long id) {
         return usersService.activateUser(id);
     }
 
     @Override
-    public User deactivateUser(@PathVariable("id") Long id) {
+    public User deactivateUser(Long id) {
         return usersService.deactivateUser(id);
     }
 
     @Override
-    public void deleteUser(@PathVariable("id") Long id) {
+    public void deleteUser(Long id) {
         usersService.deleteUser(id);
     }
 
