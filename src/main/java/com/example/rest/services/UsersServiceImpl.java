@@ -2,6 +2,7 @@ package com.example.rest.services;
 
 import com.example.rest.dao.UserDao;
 import com.example.rest.dao.UsersRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,9 +12,9 @@ import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 @Component
+@RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
-    @Autowired
     private UsersRepository repository;
 
     @Override

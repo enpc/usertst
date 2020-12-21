@@ -3,6 +3,7 @@ package com.example.rest.controllers;
 import com.example.rest.controllers.dto.LoginRequest;
 import com.example.rest.services.UsersService;
 import io.swagger.annotations.ApiOperation;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,9 +15,9 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.validation.Valid;
 
 @RestController
+@RequiredArgsConstructor
 public class LoginControllerImpl implements LoginController {
 
-    @Autowired
     private UsersService usersService;
 
     @Override
