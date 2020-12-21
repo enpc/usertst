@@ -14,10 +14,10 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class UsersAdminControllerImpl implements UsersAdminController {
 
-    private UsersService usersService;
+    private final UsersService usersService;
 
     @Override
-    public User createUser(@RequestBody @Valid UserDataRequest createUserRequest) {
+    public User createUser(UserDataRequest createUserRequest) {
         return usersService.create(createUserRequest.getName());
     }
 

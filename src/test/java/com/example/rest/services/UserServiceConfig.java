@@ -13,7 +13,7 @@ public class UserServiceConfig {
 
     @Bean
     public UsersService usersService(){
-        return new UsersServiceImpl();
+        return new UsersServiceImpl(usersRepository());
     }
 
     @Bean

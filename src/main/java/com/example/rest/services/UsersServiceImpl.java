@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
-    private UsersRepository repository;
+    private final UsersRepository repository;
 
     @Override
     public UserDao create(String name) {
