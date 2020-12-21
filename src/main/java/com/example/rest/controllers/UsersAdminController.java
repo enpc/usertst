@@ -1,73 +1,42 @@
 package com.example.rest.controllers;
 
-import com.example.rest.services.*;
+import com.example.rest.services.User;
+import com.example.rest.services.UserDataRequest;
+import com.example.rest.services.UserNotFoundException;
+import com.example.rest.services.UserParametersException;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
 
-@RestController
 @RequestMapping("/admin")
-public class UsersAdminController {
-
-    @Autowired
-    private UsersService usersService;
-
+public interface UsersAdminController {
     @ApiOperation(value = "Create new user")
     @PostMapping(consumes = "application/json")
-    public User createUser(@RequestBody @Valid UserDataRequest createUserRequest){
-        return usersService.create(createUserRequest.getName());
-    }
+    User createUser(@RequestBody @Valid UserDataRequest createUserRequest);
 
     @ApiOperation(value = "Retrieve all users")
     @GetMapping
-    public Iterable<User> getUsers(){
-        return usersService.getAll();
-    }
+    Iterable<User> getUsers();
 
     @ApiOperation(value = "Get user by id")
     @GetMapping("/{id}")
-    public User getUser(@PathVariable("id") Long id){
-        return usersService.getById(id)
-                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
-    }
+    User getUser(@PathVariable("id") Long id);
 
     @ApiOperation(value = "Update user data")
     @PostMapping(value = "/{id}", consumes = "application/json")
-    public User updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserDataRequest userDataRequest){
-        return usersService.updateUserData(id, userDataRequest);
-    }
+    User updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserDataRequest userDataRequest);
 
     @ApiOperation(value = "Activate user")
     @PostMapping("/{id}/activate")
-    public User activateUser(@PathVariable("id") Long id){
-        throw new UserNotFoundException("");
-     //   return usersService.activateUser(id);
-    }
+    User activateUser(@PathVariable("id") Long id);
 
     @ApiOperation(value = "Deactivate user")
     @PostMapping("/{id}/deactivate")
-    public User deactivateUser(@PathVariable("id") Long id){
-        return usersService.deactivateUser(id);
-    }
+    User deactivateUser(@PathVariable("id") Long id);
 
     @ApiOperation(value = "Delete user")
     @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable("id") Long id){
-        usersService.deleteUser(id);
-    }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public void notFoundExceptionHandler(){
-
-    }
-
-    @ExceptionHandler(UserParametersException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public void userParametersExceptionHandler(){
-    }
+    void deleteUser(@PathVariable("id") Long id);
 }
