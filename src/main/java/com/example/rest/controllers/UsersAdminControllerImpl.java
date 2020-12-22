@@ -29,7 +29,7 @@ public class UsersAdminControllerImpl implements UsersAdminController {
     @Override
     public User getUser(Long id) {
         return usersService.getById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override
@@ -50,16 +50,5 @@ public class UsersAdminControllerImpl implements UsersAdminController {
     @Override
     public void deleteUser(Long id) {
         usersService.deleteUser(id);
-    }
-
-    @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(value = HttpStatus.NOT_FOUND)
-    public void notFoundExceptionHandler() {
-
-    }
-
-    @ExceptionHandler(UserParametersException.class)
-    @ResponseStatus(value = HttpStatus.BAD_REQUEST)
-    public void userParametersExceptionHandler() {
     }
 }

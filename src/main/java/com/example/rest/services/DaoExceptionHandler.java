@@ -16,15 +16,7 @@ public class DaoExceptionHandler {
             pointcut = "execution(public com.example.rest.services.* *(..))",
             throwing = "e"
     )
-    public void alreadyExists(DataIntegrityViolationException e){
-        throw new UserParametersException(e);
-    }
-
-    @AfterThrowing(
-            pointcut = "execution(public com.example.rest.services.* *(..))",
-            throwing = "e"
-    )
     public void notFound(EntityNotFoundException e){
-        throw new UserNotFoundException(e);
+        throw new UserNotFoundException("user not found", e);
     }
 }

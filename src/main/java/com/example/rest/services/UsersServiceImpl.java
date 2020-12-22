@@ -4,6 +4,7 @@ import com.example.rest.dao.UserDao;
 import com.example.rest.dao.UsersRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
@@ -23,10 +24,14 @@ public class UsersServiceImpl implements UsersService {
             throw new UserParametersException("name can't be empty");
         }
 
-        var user = new UserDao();
-        user.setName(name);
-        user.setActive(true);
-        return repository.save(user);
+        try {
+            var user = new UserDao();
+            user.setName(name);
+            user.setActive(true);
+            return repository.save(user);
+        }catch (DataIntegrityViolationException e){
+            throw new UserParametersException("user with this name already exists");
+        }
     }
 
     @Override
