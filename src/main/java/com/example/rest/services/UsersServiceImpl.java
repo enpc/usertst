@@ -2,12 +2,17 @@ package com.example.rest.services;
 
 import com.example.rest.dao.UserDao;
 import com.example.rest.dao.UsersRepository;
+import com.example.rest.services.dto.*;
+import com.example.rest.services.exceptions.UserNotFoundException;
+import com.example.rest.services.exceptions.UserParametersException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
+import org.springframework.util.DigestUtils;
 
-import javax.persistence.EntityNotFoundException;
+import javax.validation.Valid;
+import java.net.CacheRequest;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -18,54 +23,70 @@ public class UsersServiceImpl implements UsersService {
 
     private final UsersRepository repository;
 
-    @Override
-    public UserDao create(String name) {
-        if ((name == null) || (name.isEmpty())) {
-            throw new UserParametersException("name can't be empty");
-        }
+    private final ModelMapper modelMapper;
 
+    @Override
+    public UserProperties create(CreateUserRequest request) {
         try {
             var user = new UserDao();
-            user.setName(name);
+            user.setName(request.getName());
             user.setActive(true);
-            return repository.save(user);
+            user.setPassword(encodePassword(request.getPassword()));
+            return convertToProperties(repository.save(user));
         }catch (DataIntegrityViolationException e){
             throw new UserParametersException("user with this name already exists");
         }
     }
 
     @Override
-    public Iterable<User> getAll() {
+    public Iterable<UserProperties> getAll() {
         return repository.findAll().stream()
-                .map(User.class::cast)
+                .map(this::convertToProperties)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<User> getById(Long id) {
-        return  repository.findById(id).map(User.class::cast);
+    public Optional<UserProperties> getById(Long id) {
+        return  repository.findById(id).map(this::convertToProperties);
     }
 
     @Override
-    public Boolean userCanLogging(String name) {
-        return repository.findByName(name)
-                .map(UserDao::getActive)
+    public Boolean login(LoginRequest loginRequest) {
+        return repository.findByName(loginRequest.getName())
+                .map(v -> v.getActive() && v.getPassword().equals(encodePassword(loginRequest.getPassword())))
                 .orElse(false);
     }
 
     @Override
-    public User updateUserData(Long id, UserDataRequest request) {
-        return changeUser(id, usr -> usr.setName(request.getName()));
+    public UserProperties updateUserData(Long id, UserSetPropertiesRequest request) {
+        return changeUser(id, usr -> {
+            usr.setName(request.getName());
+            usr.setFirstName(request.getFirstName());
+            usr.setLastName(request.getLastName());
+        });
     }
 
     @Override
-    public User activateUser(Long id) {
+    public UserProperties activateUser(Long id) {
         return changeUser(id, usr -> usr.setActive(true));
     }
 
     @Override
-    public User deactivateUser(Long id) {
+    public UserProperties deactivateUser(Long id) {
         return changeUser(id, usr -> usr.setActive(false));
+    }
+
+    @Override
+    public UserProperties ChangePassword(ChangePasswordRequest changePasswordRequest) {
+        var user = repository.findByName(changePasswordRequest.getName())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+
+        if (!encodePassword(changePasswordRequest.getOldPassword()).equals(user.getPassword())){
+            throw new UserParametersException("Old password incorrect");
+        }
+
+        user.setPassword(encodePassword(changePasswordRequest.getNewPassword()));
+        return convertToProperties(repository.save(user));
     }
 
     @Override
@@ -73,9 +94,17 @@ public class UsersServiceImpl implements UsersService {
         repository.deleteById(id);
     }
 
-    private User changeUser(Long id, Consumer<UserDao> operation){
+    private UserProperties changeUser(Long id, Consumer<UserDao> operation){
         var user = repository.getOne(id);
         operation.accept(user);
-        return repository.save(user);
+        return convertToProperties(repository.save(user));
+    }
+
+    private UserProperties convertToProperties(UserDao user){
+        return modelMapper.map(user, UserProperties.class);
+    }
+
+    private String encodePassword(String password){
+        return DigestUtils.md5DigestAsHex(password.getBytes());
     }
 }

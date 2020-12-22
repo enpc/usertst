@@ -1,16 +1,15 @@
 package com.example.rest.controllers;
 
-import com.example.rest.services.User;
-import com.example.rest.services.UserDataRequest;
-import com.example.rest.services.UserNotFoundException;
-import com.example.rest.services.UserParametersException;
+import com.example.rest.services.dto.CreateUserRequest;
+import com.example.rest.services.dto.UserProperties;
+import com.example.rest.services.dto.UserSetPropertiesRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.net.CacheRequest;
 
 @RequestMapping("/admin")
 public interface UsersAdminController {
@@ -20,12 +19,12 @@ public interface UsersAdminController {
             @ApiResponse(code = 400, message = "User with this name already exists")
     })
     @PostMapping(consumes = "application/json")
-    User createUser(@RequestBody @Valid UserDataRequest createUserRequest);
+    UserProperties createUser(@RequestBody @Valid CreateUserRequest createUserRequest);
 
     @ApiOperation(value = "Retrieve all users")
     @ApiResponse(code = 200, message = "Return all users or empty list")
     @GetMapping
-    Iterable<User> getUsers();
+    Iterable<UserProperties> getUsers();
 
     @ApiOperation(value = "Get user by id")
     @ApiResponses({
@@ -33,7 +32,7 @@ public interface UsersAdminController {
             @ApiResponse(code = 404, message = "Specified user id not found")
     })
     @GetMapping("/{id}")
-    User getUser(@PathVariable("id") Long id);
+    UserProperties getUser(@PathVariable("id") Long id);
 
     @ApiOperation(value = "Update user data")
     @ApiResponses({
@@ -41,7 +40,7 @@ public interface UsersAdminController {
             @ApiResponse(code = 404, message = "Specified user id not found")
     })
     @PostMapping(value = "/{id}", consumes = "application/json")
-    User updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserDataRequest userDataRequest);
+    UserProperties updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserSetPropertiesRequest userSetPropertiesRequest);
 
     @ApiOperation(value = "Activate user")
     @ApiResponses({
@@ -49,7 +48,7 @@ public interface UsersAdminController {
             @ApiResponse(code = 404, message = "Specified user id not found")
     })
     @PostMapping("/{id}/activate")
-    User activateUser(@PathVariable("id") Long id);
+    UserProperties activateUser(@PathVariable("id") Long id);
 
     @ApiOperation(value = "Deactivate user")
     @ApiResponses({
@@ -57,7 +56,7 @@ public interface UsersAdminController {
             @ApiResponse(code = 404, message = "Specified user id not found")
     })
     @PostMapping("/{id}/deactivate")
-    User deactivateUser(@PathVariable("id") Long id);
+    UserProperties deactivateUser(@PathVariable("id") Long id);
 
     @ApiOperation(value = "Delete user")
     @ApiResponse(code = 200, message = "User deleted.")

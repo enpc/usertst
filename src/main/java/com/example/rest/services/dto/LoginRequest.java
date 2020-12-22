@@ -1,4 +1,4 @@
-package com.example.rest.controllers.dto;
+package com.example.rest.services.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -10,5 +10,9 @@ public class LoginRequest {
     @ApiModelProperty(value = "User name", example = "User")
     @NotBlank
     String name;
+
+    @ApiModelProperty(value = "User password", example = "password")
+    @NotBlank
+    String password;
 }
 

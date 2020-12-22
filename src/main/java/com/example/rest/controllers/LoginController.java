@@ -1,10 +1,11 @@
 package com.example.rest.controllers;
 
-import com.example.rest.controllers.dto.LoginRequest;
+import com.example.rest.services.dto.ChangePasswordRequest;
+import com.example.rest.services.dto.LoginRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,6 +18,15 @@ public interface LoginController {
             @ApiResponse(code = 200, message = "User logged in"),
             @ApiResponse(code = 403, message = "Forbidden")
     })
-    @GetMapping()
+    @PostMapping()
     void login(@RequestBody @Valid LoginRequest loginRequest);
+
+    @ApiOperation(value = "Change user password", notes = "Change user password")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "User logged in"),
+            @ApiResponse(code = 404, message = "User not found"),
+            @ApiResponse(code = 400, message = "incorrect parameters"),
+    })
+    @PostMapping("/changepassword")
+    void changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest);
 }

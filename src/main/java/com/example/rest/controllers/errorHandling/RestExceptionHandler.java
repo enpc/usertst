@@ -1,23 +1,17 @@
 package com.example.rest.controllers.errorHandling;
 
-import com.example.rest.services.UserNotFoundException;
-import com.example.rest.services.UserParametersException;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
+import com.example.rest.services.exceptions.UserNotFoundException;
+import com.example.rest.services.exceptions.UserParametersException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.lang.NonNullApi;
 import org.springframework.validation.FieldError;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import java.util.AbstractMap;
-import java.util.Arrays;
 import java.util.Optional;
 import java.util.stream.Collectors;
 

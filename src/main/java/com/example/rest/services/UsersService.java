@@ -1,17 +1,22 @@
 package com.example.rest.services;
 
+import com.example.rest.services.dto.*;
+import org.springframework.validation.annotation.Validated;
+
+import javax.validation.Valid;
 import java.util.Optional;
 
 public interface UsersService {
-    User create(String name);
+    UserProperties create(CreateUserRequest request);
 
-    Iterable<User> getAll();
-    Optional<User> getById(Long id);
-    Boolean userCanLogging(String name);
+    Iterable<UserProperties> getAll();
+    Optional<UserProperties> getById(Long id);
+    Boolean login(LoginRequest loginRequest);
 
-    User updateUserData(Long id, UserDataRequest request);
-    User activateUser(Long id);
-    User deactivateUser(Long id);
+    UserProperties updateUserData(Long id, UserSetPropertiesRequest request);
+    UserProperties activateUser(Long id);
+    UserProperties deactivateUser(Long id);
+    UserProperties ChangePassword(ChangePasswordRequest changePasswordRequest);
 
-    void deleteUser(Long user);
+    void deleteUser(Long id);
 }

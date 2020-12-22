@@ -1,4 +1,4 @@
-package com.example.rest.services;
+package com.example.rest.services.exceptions;
 
 public class UserNotFoundException extends RuntimeException{
 

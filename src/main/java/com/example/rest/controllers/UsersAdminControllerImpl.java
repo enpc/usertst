@@ -1,14 +1,12 @@
 package com.example.rest.controllers;
 
 import com.example.rest.services.*;
-import io.swagger.annotations.ApiOperation;
+import com.example.rest.services.dto.CreateUserRequest;
+import com.example.rest.services.dto.UserProperties;
+import com.example.rest.services.dto.UserSetPropertiesRequest;
+import com.example.rest.services.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.server.ResponseStatusException;
-
-import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -17,33 +15,33 @@ public class UsersAdminControllerImpl implements UsersAdminController {
     private final UsersService usersService;
 
     @Override
-    public User createUser(UserDataRequest createUserRequest) {
-        return usersService.create(createUserRequest.getName());
+    public UserProperties createUser(CreateUserRequest createUserRequest) {
+        return usersService.create(createUserRequest);
     }
 
     @Override
-    public Iterable<User> getUsers() {
+    public Iterable<UserProperties> getUsers() {
         return usersService.getAll();
     }
 
     @Override
-    public User getUser(Long id) {
+    public UserProperties getUser(Long id) {
         return usersService.getById(id)
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
     }
 
     @Override
-    public User updateUser(Long id,UserDataRequest userDataRequest) {
-        return usersService.updateUserData(id, userDataRequest);
+    public UserProperties updateUser(Long id, UserSetPropertiesRequest userSetPropertiesRequest) {
+        return usersService.updateUserData(id, userSetPropertiesRequest);
     }
 
     @Override
-    public User activateUser(Long id) {
+    public UserProperties activateUser(Long id) {
         return usersService.activateUser(id);
     }
 
     @Override
-    public User deactivateUser(Long id) {
+    public UserProperties deactivateUser(Long id) {
         return usersService.deactivateUser(id);
     }
 

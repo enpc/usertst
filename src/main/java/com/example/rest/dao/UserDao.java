@@ -4,15 +4,13 @@ import lombok.*;
 
 import javax.persistence.*;
 
-import com.example.rest.services.User;
-import net.bytebuddy.implementation.bind.MethodDelegationBinder;
-
 @Entity
 @Table(name="users")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDao implements User {
+@Builder
+public class UserDao{
 
     @Id
     @GeneratedValue
@@ -20,6 +18,12 @@ public class UserDao implements User {
 
     @Column(unique = true)
     private String name;
+
+    private String firstName;
+
+    private String lastName;
+
+    private String password;
 
     private Boolean active;
 }

@@ -1,9 +1,8 @@
-package com.example.rest.services;
+package com.example.rest.services.exceptions;
 
+import com.example.rest.services.exceptions.UserNotFoundException;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.EntityNotFoundException;
