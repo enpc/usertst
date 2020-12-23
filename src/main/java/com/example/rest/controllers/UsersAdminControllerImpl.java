@@ -1,5 +1,7 @@
 package com.example.rest.controllers;
 
+import com.example.rest.controllers.dto.CreateUserRequestDto;
+import com.example.rest.controllers.dto.UserSetPropertiesRequestDto;
 import com.example.rest.services.*;
 import com.example.rest.services.dto.CreateUserRequest;
 import com.example.rest.services.dto.UserProperties;
@@ -15,7 +17,7 @@ public class UsersAdminControllerImpl implements UsersAdminController {
     private final UsersService usersService;
 
     @Override
-    public UserProperties createUser(CreateUserRequest createUserRequest) {
+    public UserProperties createUser(CreateUserRequestDto createUserRequest) {
         return usersService.create(createUserRequest);
     }
 
@@ -31,7 +33,7 @@ public class UsersAdminControllerImpl implements UsersAdminController {
     }
 
     @Override
-    public UserProperties updateUser(Long id, UserSetPropertiesRequest userSetPropertiesRequest) {
+    public UserProperties updateUser(Long id, UserSetPropertiesRequestDto userSetPropertiesRequest) {
         return usersService.updateUserData(id, userSetPropertiesRequest);
     }
 

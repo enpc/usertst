@@ -1,5 +1,7 @@
 package com.example.rest.controllers;
 
+import com.example.rest.controllers.dto.CreateUserRequestDto;
+import com.example.rest.controllers.dto.UserSetPropertiesRequestDto;
 import com.example.rest.services.dto.CreateUserRequest;
 import com.example.rest.services.dto.UserProperties;
 import com.example.rest.services.dto.UserSetPropertiesRequest;
@@ -19,7 +21,7 @@ public interface UsersAdminController {
             @ApiResponse(code = 400, message = "User with this name already exists")
     })
     @PostMapping(consumes = "application/json")
-    UserProperties createUser(@RequestBody @Valid CreateUserRequest createUserRequest);
+    UserProperties createUser(@RequestBody @Valid CreateUserRequestDto createUserRequest);
 
     @ApiOperation(value = "Retrieve all users")
     @ApiResponse(code = 200, message = "Return all users or empty list")
@@ -40,7 +42,7 @@ public interface UsersAdminController {
             @ApiResponse(code = 404, message = "Specified user id not found")
     })
     @PostMapping(value = "/{id}", consumes = "application/json")
-    UserProperties updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserSetPropertiesRequest userSetPropertiesRequest);
+    UserProperties updateUser(@PathVariable("id") Long id, @RequestBody @Valid UserSetPropertiesRequestDto userSetPropertiesRequest);
 
     @ApiOperation(value = "Activate user")
     @ApiResponses({

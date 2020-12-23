@@ -1,7 +1,7 @@
 package com.example.rest.controllers;
 
-import com.example.rest.services.dto.ChangePasswordRequest;
-import com.example.rest.services.dto.LoginRequest;
+import com.example.rest.controllers.dto.ChangePasswordRequestDto;
+import com.example.rest.controllers.dto.LoginRequestDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
@@ -19,7 +19,7 @@ public interface LoginController {
             @ApiResponse(code = 403, message = "Forbidden")
     })
     @PostMapping()
-    void login(@RequestBody @Valid LoginRequest loginRequest);
+    void login(@RequestBody @Valid LoginRequestDto loginRequest);
 
     @ApiOperation(value = "Change user password", notes = "Change user password")
     @ApiResponses({
@@ -28,5 +28,5 @@ public interface LoginController {
             @ApiResponse(code = 400, message = "incorrect parameters"),
     })
     @PostMapping("/changepassword")
-    void changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest);
+    void changePassword(@RequestBody @Valid ChangePasswordRequestDto changePasswordRequest);
 }

@@ -1,18 +1,13 @@
 package com.example.rest.services.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-@Data
-@AllArgsConstructor
-public class CreateUserRequest {
+public interface CreateUserRequest {
     @NotBlank
-    private String name;
+    String getName();
 
     @NotBlank()
     @Size(min = 3)
-    private String password;
+    String getPassword();
 }

@@ -2,10 +2,8 @@ package com.example.rest.services;
 
 import com.example.rest.dao.UserDao;
 import com.example.rest.dao.UsersRepository;
-import com.example.rest.services.dto.CreateUserRequest;
+import com.example.rest.controllers.dto.CreateUserRequestDto;
 import com.example.rest.services.dto.UserProperties;
-import com.example.rest.services.exceptions.UserParametersException;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -37,7 +35,7 @@ class UsersServiceImplTest {
     void create() {
         Mockito.when(usersRepository.save(any())).then(arg -> arg.getArgument(0));
 
-        UserProperties user = usersService.create(new CreateUserRequest("Mike","123"));
+        UserProperties user = usersService.create(new CreateUserRequestDto("Mike","123"));
         Mockito.verify(usersRepository).save(any());
         assertEquals("Mike", user.getName());
     }

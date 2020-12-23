@@ -1,9 +1,7 @@
 package com.example.rest.services;
 
 import com.example.rest.services.dto.*;
-import org.springframework.validation.annotation.Validated;
 
-import javax.validation.Valid;
 import java.util.Optional;
 
 public interface UsersService {

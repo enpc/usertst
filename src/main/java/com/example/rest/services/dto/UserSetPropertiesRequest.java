@@ -1,16 +1,12 @@
 package com.example.rest.services.dto;
 
-import lombok.Data;
-
 import javax.validation.constraints.NotBlank;
 
-@Data
-public class UserSetPropertiesRequest {
+public interface UserSetPropertiesRequest {
     @NotBlank
-    private String name;
+    String getName();
 
-    private String firstName;
+    String getFirstName();
 
-    private String lastName;
-
+    String getLastName();
 }
