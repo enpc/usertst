@@ -7,23 +7,23 @@ import javax.persistence.*;
 @Entity
 @Table(name="users")
 @Data
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class UserDao{
 
     @Id
     @GeneratedValue
-    private Long id;
+    private final Long id;
 
     @Column(unique = true)
-    private String name;
+    private final String name;
 
-    private String firstName;
+    private final String firstName;
 
-    private String lastName;
+    private final String lastName;
 
-    private String password;
+    private final String password;
 
-    private Boolean active;
+    private final Boolean active;
 }
