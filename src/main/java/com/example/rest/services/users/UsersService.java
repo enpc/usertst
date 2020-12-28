@@ -1,11 +1,12 @@
 package com.example.rest.services.users;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UsersService {
     UserData create(CreateUserRequest request);
 
-    Iterable<UserData> getAll();
+    List<UserData> getAll();
 
     Optional<UserData> getById(Long id);
 

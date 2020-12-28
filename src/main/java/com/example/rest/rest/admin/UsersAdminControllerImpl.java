@@ -9,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 public class UsersAdminControllerImpl implements UsersAdminController {
@@ -21,7 +23,7 @@ public class UsersAdminControllerImpl implements UsersAdminController {
     }
 
     @Override
-    public Iterable<UserData> getUsers() {
+    public List<UserData> getUsers() {
         return usersService.getAll();
     }
 

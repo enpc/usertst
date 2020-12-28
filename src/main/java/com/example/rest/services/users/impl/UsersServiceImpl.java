@@ -11,6 +11,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -38,7 +39,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Iterable<UserData> getAll() {
+    public List<UserData> getAll() {
         return repository.findAll().stream()
                 .map(this::convertToProperties)
                 .collect(Collectors.toList());

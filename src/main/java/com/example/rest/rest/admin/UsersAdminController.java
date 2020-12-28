@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RequestMapping("/admin")
 public interface UsersAdminController {
@@ -24,7 +25,7 @@ public interface UsersAdminController {
     @ApiOperation(value = "Retrieve all users")
     @ApiResponse(code = 200, message = "Return all users or empty list")
     @GetMapping
-    Iterable<UserData> getUsers();
+    List<UserData> getUsers();
 
     @ApiOperation(value = "Get user by id")
     @ApiResponses({
