@@ -1,4 +1,4 @@
-package com.example.rest.services.exceptions;
+package com.example.rest.services.users.exceptions;
 
 public class UserParametersException extends RuntimeException {
     public UserParametersException(Throwable cause) {

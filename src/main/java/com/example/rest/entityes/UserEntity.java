@@ -1,4 +1,4 @@
-package com.example.rest.dao;
+package com.example.rest.entityes;
 
 import lombok.*;
 
@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
 @AllArgsConstructor
 @Builder(toBuilder = true)
-public class UserDao{
+public class UserEntity {
 
     @Id
     @GeneratedValue

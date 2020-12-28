@@ -1,13 +1,15 @@
-package com.example.rest.controllers.dto;
+package com.example.rest.services.users;
 
-import com.example.rest.services.dto.UserSetPropertiesRequest;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
-public class UserSetPropertiesRequestDto implements UserSetPropertiesRequest {
+public class SetUserDataRequest {
 
     @ApiModelProperty(value = "name", example = "User")
+    @NotBlank
     private String name;
 
     @ApiModelProperty(value = "first name", example = "FirstName")

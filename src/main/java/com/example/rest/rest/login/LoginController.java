@@ -1,10 +1,11 @@
-package com.example.rest.controllers;
+package com.example.rest.rest.login;
 
-import com.example.rest.controllers.dto.ChangePasswordRequestDto;
-import com.example.rest.controllers.dto.LoginRequestDto;
+import com.example.rest.services.users.ChangePasswordRequest;
+import com.example.rest.services.users.LoginRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +20,7 @@ public interface LoginController {
             @ApiResponse(code = 403, message = "Forbidden")
     })
     @PostMapping()
-    void login(@RequestBody @Valid LoginRequestDto loginRequest);
+    ResponseEntity<Void> login(@RequestBody @Valid LoginRequest loginRequest);
 
     @ApiOperation(value = "Change user password", notes = "Change user password")
     @ApiResponses({
@@ -28,5 +29,5 @@ public interface LoginController {
             @ApiResponse(code = 400, message = "incorrect parameters"),
     })
     @PostMapping("/changepassword")
-    void changePassword(@RequestBody @Valid ChangePasswordRequestDto changePasswordRequest);
+    ResponseEntity<Void> changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest);
 }

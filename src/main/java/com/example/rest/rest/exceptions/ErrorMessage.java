@@ -1,4 +1,4 @@
-package com.example.rest.controllers.errorHandling;
+package com.example.rest.rest.exceptions;
 
 import lombok.Data;
 

@@ -1,12 +1,11 @@
-package com.example.rest.services;
+package com.example.rest.services.users.impl;
 
-import com.example.rest.dao.UserDao;
-import com.example.rest.dao.UsersRepository;
-import com.example.rest.services.dto.*;
-import com.example.rest.services.exceptions.UserNotFoundException;
-import com.example.rest.services.exceptions.UserParametersException;
+import com.example.rest.entityes.UserEntity;
+import com.example.rest.entityes.UsersRepository;
+import com.example.rest.services.users.*;
+import com.example.rest.services.users.exceptions.UserNotFoundException;
+import com.example.rest.services.users.exceptions.UserParametersException;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
 import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
@@ -25,9 +24,9 @@ public class UsersServiceImpl implements UsersService {
     private final ModelMapper modelMapper;
 
     @Override
-    public UserProperties create(CreateUserRequest request) {
+    public UserData create(CreateUserRequest request) {
         try {
-            var user = UserDao.builder()
+            var user = UserEntity.builder()
                     .name(request.getName())
                     .active(true)
                     .password(encodePassword(request.getPassword()))
@@ -39,14 +38,14 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public Iterable<UserProperties> getAll() {
+    public Iterable<UserData> getAll() {
         return repository.findAll().stream()
                 .map(this::convertToProperties)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<UserProperties> getById(Long id) {
+    public Optional<UserData> getById(Long id) {
         return repository.findById(id).map(this::convertToProperties);
     }
 
@@ -58,7 +57,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UserProperties updateUserData(Long id, UserSetPropertiesRequest request) {
+    public UserData updateUserData(Long id, SetUserDataRequest request) {
         return changeUser(repository.findById(id), usr -> {
             usr
                     .name(request.getName())
@@ -68,17 +67,17 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UserProperties activateUser(Long id) {
+    public UserData activateUser(Long id) {
         return changeUser(repository.findById(id), usr -> usr.active(true));
     }
 
     @Override
-    public UserProperties deactivateUser(Long id) {
+    public UserData deactivateUser(Long id) {
         return changeUser(repository.findById(id), usr -> usr.active(false));
     }
 
     @Override
-    public UserProperties ChangePassword(ChangePasswordRequest changePasswordRequest) {
+    public UserData changePassword(ChangePasswordRequest changePasswordRequest) {
         var user = repository.findByName(changePasswordRequest.getName())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
@@ -95,7 +94,7 @@ public class UsersServiceImpl implements UsersService {
         repository.deleteById(id);
     }
 
-    private UserProperties changeUser(Optional<UserDao> user, Consumer<UserDao.UserDaoBuilder> operation) {
+    private UserData changeUser(Optional<UserEntity> user, Consumer<UserEntity.UserEntityBuilder> operation) {
         var userBuilder = user
                 .map(usr -> usr.toBuilder())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
@@ -103,8 +102,8 @@ public class UsersServiceImpl implements UsersService {
         return convertToProperties(repository.save(userBuilder.build()));
     }
 
-    private UserProperties convertToProperties(UserDao user) {
-        return modelMapper.map(user, UserProperties.class);
+    private UserData convertToProperties(UserEntity user) {
+        return modelMapper.map(user, UserData.class);
     }
 
     private String encodePassword(String password) {

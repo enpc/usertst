@@ -1,6 +1,6 @@
-package com.example.rest.services.exceptions;
+package com.example.rest.services.users.exceptions;
 
-import com.example.rest.services.exceptions.UserNotFoundException;
+import com.example.rest.services.users.exceptions.UserNotFoundException;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import javax.persistence.EntityNotFoundException;
 
 @Component
 @Aspect
-public class DaoExceptionHandler {
+public class ExceptionHandler {
 
     @AfterThrowing(
             pointcut = "execution(public com.example.rest.services.* *(..))",

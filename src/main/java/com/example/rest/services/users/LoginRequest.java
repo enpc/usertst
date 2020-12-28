@@ -1,15 +1,18 @@
-package com.example.rest.controllers.dto;
+package com.example.rest.services.users;
 
-import com.example.rest.services.dto.LoginRequest;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import javax.validation.constraints.NotBlank;
+
 @Data
-public class LoginRequestDto implements LoginRequest {
+public class LoginRequest {
     @ApiModelProperty(value = "User name", example = "User")
+    @NotBlank
     String name;
 
     @ApiModelProperty(value = "User password", example = "password")
+    @NotBlank
     String password;
 }
 

@@ -1,7 +1,7 @@
-package com.example.rest.controllers.errorHandling;
+package com.example.rest.rest.exceptions;
 
-import com.example.rest.services.exceptions.UserNotFoundException;
-import com.example.rest.services.exceptions.UserParametersException;
+import com.example.rest.services.users.exceptions.UserNotFoundException;
+import com.example.rest.services.users.exceptions.UserParametersException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -26,22 +26,22 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
                     public String message = s.getDefaultMessage();
                 })
                 .collect(Collectors.toList());
-        return new ResponseEntity<>(new ErrorMessage(message), HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest().body(new ErrorMessage(message));
     }
 
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<Object> notFoundExceptionHandler(UserNotFoundException ex, WebRequest request) {
-        return new ResponseEntity<>(new ErrorMessage(ex.getMessage()), HttpStatus.NOT_FOUND);
+        return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler(UserParametersException.class)
     public ResponseEntity<Object> userParametersExceptionHandler(UserParametersException ex, WebRequest request) {
-        return new ResponseEntity<>(new ErrorMessage(ex.getMessage()), HttpStatus.BAD_REQUEST);
+        return ResponseEntity.badRequest().body(new ErrorMessage(ex.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<Object>exceptionHandler(Exception ex){
         logger.error(ex);
-        return new ResponseEntity<>(new ErrorMessage("Internal server error"), HttpStatus.INTERNAL_SERVER_ERROR);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
     }
 }

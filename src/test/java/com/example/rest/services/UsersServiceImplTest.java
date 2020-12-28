@@ -1,9 +1,10 @@
 package com.example.rest.services;
 
-import com.example.rest.dao.UserDao;
-import com.example.rest.dao.UsersRepository;
-import com.example.rest.controllers.dto.CreateUserRequestDto;
-import com.example.rest.services.dto.UserProperties;
+import com.example.rest.entityes.UserEntity;
+import com.example.rest.entityes.UsersRepository;
+import com.example.rest.services.users.UsersService;
+import com.example.rest.services.users.CreateUserRequest;
+import com.example.rest.services.users.UserData;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -35,7 +36,7 @@ class UsersServiceImplTest {
     void create() {
         Mockito.when(usersRepository.save(any())).then(arg -> arg.getArgument(0));
 
-        UserProperties user = usersService.create(new CreateUserRequestDto("Mike","123"));
+        UserData user = usersService.create(new CreateUserRequest("Mike","123"));
         Mockito.verify(usersRepository).save(any());
         assertEquals("Mike", user.getName());
     }
@@ -44,9 +45,9 @@ class UsersServiceImplTest {
     void getAll_some() {
         Mockito.when(usersRepository.findAll())
                 .thenReturn(Arrays.asList(
-                        new UserDao(1L,"user1","fn","ln","",true),
-                        new UserDao(1L,"user2","fn","ln","",true),
-                        new UserDao(1L,"user3","fn","ln","",true)
+                        new UserEntity(1L,"user1","fn","ln","",true),
+                        new UserEntity(1L,"user2","fn","ln","",true),
+                        new UserEntity(1L,"user3","fn","ln","",true)
                 ));
 
         var users = usersService.getAll();
@@ -68,7 +69,7 @@ class UsersServiceImplTest {
 
         Mockito.when(usersRepository.findById(any())).thenReturn(Optional.empty());
         Mockito.when(usersRepository.findById(1L))
-                .thenReturn(Optional.of(new UserDao(1L,"user1","fn","ln","",true)));
+                .thenReturn(Optional.of(new UserEntity(1L,"user1","fn","ln","",true)));
 
         var existsUser = usersService.getById(1L);
         assertTrue(existsUser.isPresent());
