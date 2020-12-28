@@ -6,7 +6,6 @@ import com.example.rest.services.users.*;
 import com.example.rest.services.users.exceptions.UserNotFoundException;
 import com.example.rest.services.users.exceptions.UserParametersException;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
@@ -22,7 +21,7 @@ public class UsersServiceImpl implements UsersService {
 
     private final UsersRepository repository;
 
-    private final ModelMapper modelMapper;
+    private final UserDataMapper modelMapper;
 
     @Override
     public UserData create(CreateUserRequest request) {
@@ -32,7 +31,7 @@ public class UsersServiceImpl implements UsersService {
                     .active(true)
                     .password(encodePassword(request.getPassword()))
                     .build();
-            return convertToProperties(repository.save(user));
+            return convertToData(repository.save(user));
         } catch (DataIntegrityViolationException e) {
             throw new UserParametersException("user with this name already exists");
         }
@@ -41,13 +40,13 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public List<UserData> getAll() {
         return repository.findAll().stream()
-                .map(this::convertToProperties)
+                .map(this::convertToData)
                 .collect(Collectors.toList());
     }
 
     @Override
     public Optional<UserData> getById(Long id) {
-        return repository.findById(id).map(this::convertToProperties);
+        return repository.findById(id).map(this::convertToData);
     }
 
     @Override
@@ -100,11 +99,11 @@ public class UsersServiceImpl implements UsersService {
                 .map(usr -> usr.toBuilder())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
         operation.accept(userBuilder);
-        return convertToProperties(repository.save(userBuilder.build()));
+        return convertToData(repository.save(userBuilder.build()));
     }
 
-    private UserData convertToProperties(UserEntity user) {
-        return modelMapper.map(user, UserData.class);
+    private UserData convertToData(UserEntity user) {
+        return modelMapper.userEntityToUserData(user);
     }
 
     private String encodePassword(String password) {

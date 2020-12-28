@@ -2,9 +2,10 @@ package com.example.rest.services;
 
 import com.example.rest.entityes.UsersRepository;
 import com.example.rest.services.users.UsersService;
+import com.example.rest.services.users.impl.UserDataMapper;
 import com.example.rest.services.users.impl.UsersServiceImpl;
+import org.mapstruct.factory.Mappers;
 import org.mockito.Mockito;
-import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -24,7 +25,7 @@ public class UserServiceConfig {
     }
 
     @Bean
-    public ModelMapper modelMapper(){
-        return  new ModelMapper();
+    public UserDataMapper modelMapper(){
+        return Mappers.getMapper(UserDataMapper.class);
     }
 }

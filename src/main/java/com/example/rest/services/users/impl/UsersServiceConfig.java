@@ -1,6 +1,6 @@
 package com.example.rest.services.users.impl;
 
-import org.modelmapper.ModelMapper;
+import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
@@ -10,7 +10,7 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 public class UsersServiceConfig {
 
     @Bean
-    public ModelMapper modelMapper(){
-        return  new ModelMapper();
+    public UserDataMapper modelMapper(){
+        return Mappers.getMapper(UserDataMapper.class);
     }
 }
