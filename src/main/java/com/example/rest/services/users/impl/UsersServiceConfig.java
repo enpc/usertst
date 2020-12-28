@@ -9,8 +9,4 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy
 public class UsersServiceConfig {
 
-    @Bean
-    public UserDataMapper modelMapper(){
-        return Mappers.getMapper(UserDataMapper.class);
-    }
 }
