@@ -58,22 +58,28 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public UserData updateUserData(Long id, SetUserDataRequest request) {
-        return changeUser(repository.findById(id), usr -> {
-            usr
-                    .name(request.getName())
-                    .firstName(request.getFirstName())
-                    .lastName(request.getLastName());
-        });
+        return changeUser(
+                repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found")),
+                usr -> usr
+                        .name(request.getName())
+                        .firstName(request.getFirstName())
+                        .lastName(request.getLastName()));
     }
 
     @Override
     public UserData activateUser(Long id) {
-        return changeUser(repository.findById(id), usr -> usr.active(true));
+        return changeUser(
+                repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found")),
+                usr -> usr.active(true)
+        );
     }
 
     @Override
     public UserData deactivateUser(Long id) {
-        return changeUser(repository.findById(id), usr -> usr.active(false));
+        return changeUser(
+                repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found")),
+                usr -> usr.active(false)
+        );
     }
 
     @Override
@@ -85,7 +91,7 @@ public class UsersServiceImpl implements UsersService {
             throw new UserParametersException("Old password incorrect");
         }
 
-        return changeUser(Optional.of(user),
+        return changeUser((user),
                 usr -> usr.password(encodePassword(changePasswordRequest.getNewPassword())));
     }
 
@@ -94,10 +100,8 @@ public class UsersServiceImpl implements UsersService {
         repository.deleteById(id);
     }
 
-    private UserData changeUser(Optional<UserEntity> user, Consumer<UserEntity.UserEntityBuilder> operation) {
-        var userBuilder = user
-                .map(usr -> usr.toBuilder())
-                .orElseThrow(() -> new UserNotFoundException("User not found"));
+    private UserData changeUser(UserEntity user, Consumer<UserEntity.UserEntityBuilder> operation) {
+        var userBuilder = user.toBuilder();
         operation.accept(userBuilder);
         return convertToData(repository.save(userBuilder.build()));
     }
