@@ -10,6 +10,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.util.stream.Collectors;
+
 @ControllerAdvice
 @Log4j2
 public class RestExceptionHandler {
@@ -18,7 +20,7 @@ public class RestExceptionHandler {
     protected ResponseEntity<String> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         var message = ex.getBindingResult().getFieldErrors().stream()
                 .map(s -> s.getField() + " : " +s.getDefaultMessage())
-                .reduce("",(acc, l)->acc+"\n"+l);
+                .collect(Collectors.joining("\n"));
         return ResponseEntity.badRequest().body(message);
     }
 
