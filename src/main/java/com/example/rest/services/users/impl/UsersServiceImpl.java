@@ -7,6 +7,7 @@ import com.example.rest.services.users.exceptions.UserNotFoundException;
 import com.example.rest.services.users.exceptions.UserParametersException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.DigestUtils;
 
@@ -97,7 +98,11 @@ public class UsersServiceImpl implements UsersService {
 
     @Override
     public void deleteUser(Long id) {
-        repository.deleteById(id);
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new UserNotFoundException("User not found");
+        }
     }
 
     private UserData changeUser(UserEntity user, Consumer<UserEntity.UserEntityBuilder> operation) {
