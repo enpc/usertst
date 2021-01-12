@@ -1,7 +1,7 @@
 package com.example.rest.controller.admin;
 
 import com.example.rest.entityes.UserEntity;
-import com.example.rest.entityes.UsersRepository;
+import com.example.rest.repositoryes.UserRepository;
 import com.example.rest.services.users.CreateUserRequest;
 import com.example.rest.services.users.SetUserDataRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -34,7 +34,7 @@ public class AdminControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UserRepository userRepository;
 
     private Long user1Id;
     private static final String user1Name = "User1";
@@ -58,7 +58,7 @@ public class AdminControllerTest {
                         .build()
         );
 
-        var saved = usersRepository.saveAll(users);
+        var saved = userRepository.saveAll(users);
         user1Id = saved.stream()
                 .filter(u -> user1Name.equals(u.getName()))
                 .findFirst().get().getId();
@@ -66,7 +66,7 @@ public class AdminControllerTest {
 
     @After
     public void clear() {
-        usersRepository.deleteAll();
+        userRepository.deleteAll();
     }
 
     @Test

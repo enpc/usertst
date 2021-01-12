@@ -9,6 +9,7 @@ public interface UsersService {
     List<UserDataResponse> getAll();
 
     Optional<UserDataResponse> getById(Long id);
+    Optional<UserDataResponse> getByName(String name);
 
     Boolean login(LoginRequest loginRequest);
 

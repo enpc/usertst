@@ -1,6 +1,6 @@
 package com.example.rest.services;
 
-import com.example.rest.entityes.UsersRepository;
+import com.example.rest.repositoryes.UserRepository;
 import com.example.rest.services.users.UsersService;
 import com.example.rest.services.users.impl.UserDataMapper;
 import com.example.rest.services.users.impl.UsersServiceImpl;
@@ -20,8 +20,8 @@ public class UserServiceConfig {
     }
 
     @Bean
-    public UsersRepository usersRepository(){
-        return Mockito.mock(UsersRepository.class);
+    public UserRepository usersRepository(){
+        return Mockito.mock(UserRepository.class);
     }
 
     @Bean

@@ -1,7 +1,7 @@
 package com.example.rest.services;
 
 import com.example.rest.entityes.UserEntity;
-import com.example.rest.entityes.UsersRepository;
+import com.example.rest.repositoryes.UserRepository;
 import com.example.rest.services.users.UsersService;
 import com.example.rest.services.users.CreateUserRequest;
 import com.example.rest.services.users.UserDataResponse;
@@ -30,20 +30,20 @@ class UsersServiceImplTest {
     private UsersService usersService;
 
     @Autowired
-    private UsersRepository usersRepository;
+    private UserRepository userRepository;
 
     @Test
     void create() {
-        Mockito.when(usersRepository.save(any())).then(arg -> arg.getArgument(0));
+        Mockito.when(userRepository.save(any())).then(arg -> arg.getArgument(0));
 
         UserDataResponse user = usersService.create(new CreateUserRequest("Mike","123"));
-        Mockito.verify(usersRepository).save(any());
+        Mockito.verify(userRepository).save(any());
         assertEquals("Mike", user.getName());
     }
 
     @Test
     void getAll_some() {
-        Mockito.when(usersRepository.findAll())
+        Mockito.when(userRepository.findAll())
                 .thenReturn(Arrays.asList(
                         new UserEntity(1L,"user1","fn","ln","",true),
                         new UserEntity(1L,"user2","fn","ln","",true),
@@ -56,7 +56,7 @@ class UsersServiceImplTest {
 
     @Test
     void getAll_none() {
-        Mockito.when(usersRepository.findAll())
+        Mockito.when(userRepository.findAll())
                 .thenReturn(new LinkedList<>());
 
         var users = usersService.getAll();
@@ -67,8 +67,8 @@ class UsersServiceImplTest {
     @Test
     void getById() {
 
-        Mockito.when(usersRepository.findById(any())).thenReturn(Optional.empty());
-        Mockito.when(usersRepository.findById(1L))
+        Mockito.when(userRepository.findById(any())).thenReturn(Optional.empty());
+        Mockito.when(userRepository.findById(1L))
                 .thenReturn(Optional.of(new UserEntity(1L,"user1","fn","ln","",true)));
 
         var existsUser = usersService.getById(1L);

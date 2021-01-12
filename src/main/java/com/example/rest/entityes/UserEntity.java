@@ -7,23 +7,23 @@ import javax.persistence.*;
 @Entity
 @Table(name="users")
 @Data
-@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class UserEntity {
 
     @Id
     @GeneratedValue
-    private final Long id;
+    private Long id;
 
     @Column(unique = true)
-    private final String name;
+    private String name;
 
-    private final String firstName;
+    private String firstName;
 
-    private final String lastName;
+    private String lastName;
 
-    private final String password;
+    private String password;
 
-    private final Boolean active;
+    private Boolean active;
 }

@@ -1,14 +1,14 @@
 package com.example.rest.services.users.impl;
 
 import com.example.rest.entityes.UserEntity;
-import com.example.rest.entityes.UsersRepository;
+import com.example.rest.repositoryes.UserRepository;
 import com.example.rest.services.users.*;
 import com.example.rest.services.users.exceptions.UserNotFoundException;
 import com.example.rest.services.users.exceptions.UserParametersException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
 import java.util.List;
@@ -16,11 +16,11 @@ import java.util.Optional;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
-@Component
+@Service
 @RequiredArgsConstructor
 public class UsersServiceImpl implements UsersService {
 
-    private final UsersRepository repository;
+    private final UserRepository repository;
 
     private final UserDataMapper modelMapper;
 
@@ -48,6 +48,11 @@ public class UsersServiceImpl implements UsersService {
     @Override
     public Optional<UserDataResponse> getById(Long id) {
         return repository.findById(id).map(modelMapper::userEntityToUserData);
+    }
+
+    @Override
+    public Optional<UserDataResponse> getByName(String name) {
+        return repository.findByName(name).map(modelMapper::userEntityToUserData);
     }
 
     @Override
