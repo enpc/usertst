@@ -20,7 +20,7 @@ public class RestExceptionHandler {
     protected ResponseEntity<String> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         var message = ex.getBindingResult().getFieldErrors().stream()
                 .map(s -> s.getField() + " : " +s.getDefaultMessage())
-                .collect(Collectors.joining("\n"));
+                .collect(Collectors.joining(System.lineSeparator()));
         return ResponseEntity.badRequest().body(message);
     }
 
