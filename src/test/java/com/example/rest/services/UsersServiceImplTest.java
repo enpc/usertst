@@ -4,7 +4,7 @@ import com.example.rest.entityes.UserEntity;
 import com.example.rest.entityes.UsersRepository;
 import com.example.rest.services.users.UsersService;
 import com.example.rest.services.users.CreateUserRequest;
-import com.example.rest.services.users.UserData;
+import com.example.rest.services.users.UserDataResponse;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -36,7 +36,7 @@ class UsersServiceImplTest {
     void create() {
         Mockito.when(usersRepository.save(any())).then(arg -> arg.getArgument(0));
 
-        UserData user = usersService.create(new CreateUserRequest("Mike","123"));
+        UserDataResponse user = usersService.create(new CreateUserRequest("Mike","123"));
         Mockito.verify(usersRepository).save(any());
         assertEquals("Mike", user.getName());
     }
@@ -51,7 +51,7 @@ class UsersServiceImplTest {
                 ));
 
         var users = usersService.getAll();
-        assertEquals(3, StreamSupport.stream(users.spliterator(), false).count() );
+        assertEquals(3, users.size());
     }
 
     @Test

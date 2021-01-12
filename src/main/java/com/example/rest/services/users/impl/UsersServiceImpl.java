@@ -25,29 +25,29 @@ public class UsersServiceImpl implements UsersService {
     private final UserDataMapper modelMapper;
 
     @Override
-    public UserData create(CreateUserRequest request) {
+    public UserDataResponse create(CreateUserRequest request) {
         try {
             var user = UserEntity.builder()
                     .name(request.getName())
                     .active(true)
                     .password(encodePassword(request.getPassword()))
                     .build();
-            return convertToData(repository.save(user));
+            return modelMapper.userEntityToUserData(repository.save(user));
         } catch (DataIntegrityViolationException e) {
             throw new UserParametersException("user with this name already exists");
         }
     }
 
     @Override
-    public List<UserData> getAll() {
+    public List<UserDataResponse> getAll() {
         return repository.findAll().stream()
-                .map(this::convertToData)
+                .map(modelMapper::userEntityToUserData)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public Optional<UserData> getById(Long id) {
-        return repository.findById(id).map(this::convertToData);
+    public Optional<UserDataResponse> getById(Long id) {
+        return repository.findById(id).map(modelMapper::userEntityToUserData);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UserData updateUserData(Long id, SetUserDataRequest request) {
+    public UserDataResponse updateUserData(Long id, SetUserDataRequest request) {
         return changeUser(
                 repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found")),
                 usr -> usr
@@ -68,7 +68,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UserData activateUser(Long id) {
+    public UserDataResponse activateUser(Long id) {
         return changeUser(
                 repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found")),
                 usr -> usr.active(true)
@@ -76,7 +76,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UserData deactivateUser(Long id) {
+    public UserDataResponse deactivateUser(Long id) {
         return changeUser(
                 repository.findById(id).orElseThrow(() -> new UserNotFoundException("User not found")),
                 usr -> usr.active(false)
@@ -84,7 +84,7 @@ public class UsersServiceImpl implements UsersService {
     }
 
     @Override
-    public UserData changePassword(ChangePasswordRequest changePasswordRequest) {
+    public UserDataResponse changePassword(ChangePasswordRequest changePasswordRequest) {
         var user = repository.findByName(changePasswordRequest.getName())
                 .orElseThrow(() -> new UserNotFoundException("User not found"));
 
@@ -105,14 +105,10 @@ public class UsersServiceImpl implements UsersService {
         }
     }
 
-    private UserData changeUser(UserEntity user, Consumer<UserEntity.UserEntityBuilder> operation) {
+    private UserDataResponse changeUser(UserEntity user, Consumer<UserEntity.UserEntityBuilder> operation) {
         var userBuilder = user.toBuilder();
         operation.accept(userBuilder);
-        return convertToData(repository.save(userBuilder.build()));
-    }
-
-    private UserData convertToData(UserEntity user) {
-        return modelMapper.userEntityToUserData(user);
+        return modelMapper.userEntityToUserData(repository.save(userBuilder.build()));
     }
 
     private String encodePassword(String password) {

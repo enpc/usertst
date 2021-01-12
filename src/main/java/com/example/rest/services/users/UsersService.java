@@ -4,21 +4,21 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsersService {
-    UserData create(CreateUserRequest request);
+    UserDataResponse create(CreateUserRequest request);
 
-    List<UserData> getAll();
+    List<UserDataResponse> getAll();
 
-    Optional<UserData> getById(Long id);
+    Optional<UserDataResponse> getById(Long id);
 
     Boolean login(LoginRequest loginRequest);
 
-    UserData updateUserData(Long id, SetUserDataRequest request);
+    UserDataResponse updateUserData(Long id, SetUserDataRequest request);
 
-    UserData activateUser(Long id);
+    UserDataResponse activateUser(Long id);
 
-    UserData deactivateUser(Long id);
+    UserDataResponse deactivateUser(Long id);
 
-    UserData changePassword(ChangePasswordRequest changePasswordRequest);
+    UserDataResponse changePassword(ChangePasswordRequest changePasswordRequest);
 
     void deleteUser(Long id);
 }
