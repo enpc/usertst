@@ -2,8 +2,8 @@ package com.example.rest.controller.admin;
 
 import com.example.rest.entityes.UserEntity;
 import com.example.rest.repositoryes.UserRepository;
-import com.example.rest.services.users.CreateUserRequest;
-import com.example.rest.services.users.SetUserDataRequest;
+import com.example.rest.rest.admin.request.CreateUserRequest;
+import com.example.rest.rest.admin.request.SetUserDataRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;

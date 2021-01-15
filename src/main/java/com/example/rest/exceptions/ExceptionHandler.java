@@ -1,6 +1,6 @@
-package com.example.rest.services.users.exceptions;
+package com.example.rest.exceptions;
 
-import com.example.rest.services.users.exceptions.UserNotFoundException;
+import com.example.rest.exceptions.UserNotFoundException;
 import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;

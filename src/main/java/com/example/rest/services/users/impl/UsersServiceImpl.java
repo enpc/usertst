@@ -2,9 +2,14 @@ package com.example.rest.services.users.impl;
 
 import com.example.rest.entityes.UserEntity;
 import com.example.rest.repositoryes.UserRepository;
+import com.example.rest.rest.admin.request.CreateUserRequest;
+import com.example.rest.rest.admin.request.SetUserDataRequest;
+import com.example.rest.rest.admin.response.UserDataResponse;
+import com.example.rest.rest.login.request.ChangePasswordRequest;
+import com.example.rest.rest.login.request.LoginRequest;
 import com.example.rest.services.users.*;
-import com.example.rest.services.users.exceptions.UserNotFoundException;
-import com.example.rest.services.users.exceptions.UserParametersException;
+import com.example.rest.exceptions.UserNotFoundException;
+import com.example.rest.exceptions.UserParametersException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;

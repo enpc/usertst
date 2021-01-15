@@ -1,11 +1,11 @@
 package com.example.rest.services.contact.impl;
 
 import com.example.rest.repositoryes.ContactRepository;
-import com.example.rest.services.contact.ContactRequest;
-import com.example.rest.services.contact.ContactResponse;
+import com.example.rest.rest.contact.request.ContactRequest;
+import com.example.rest.rest.contact.response.ContactResponse;
 import com.example.rest.services.contact.ContactService;
 import com.example.rest.services.users.UsersService;
-import com.example.rest.services.users.exceptions.UserNotFoundException;
+import com.example.rest.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

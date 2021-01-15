@@ -1,4 +1,4 @@
-package com.example.rest.services.users.exceptions;
+package com.example.rest.exceptions;
 
 public class UserParametersException extends RuntimeException {
 

@@ -1,8 +1,8 @@
 package com.example.rest.rest.admin;
 
-import com.example.rest.services.users.CreateUserRequest;
-import com.example.rest.services.users.SetUserDataRequest;
-import com.example.rest.services.users.UserDataResponse;
+import com.example.rest.rest.admin.request.CreateUserRequest;
+import com.example.rest.rest.admin.request.SetUserDataRequest;
+import com.example.rest.rest.admin.response.UserDataResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

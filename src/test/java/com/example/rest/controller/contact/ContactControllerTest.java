@@ -4,7 +4,7 @@ import com.example.rest.entityes.ContactEntity;
 import com.example.rest.entityes.UserEntity;
 import com.example.rest.repositoryes.ContactRepository;
 import com.example.rest.repositoryes.UserRepository;
-import com.example.rest.services.contact.ContactRequest;
+import com.example.rest.rest.contact.request.ContactRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.After;

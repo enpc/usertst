@@ -1,7 +1,7 @@
 package com.example.rest.rest.login;
 
-import com.example.rest.services.users.ChangePasswordRequest;
-import com.example.rest.services.users.LoginRequest;
+import com.example.rest.rest.login.request.ChangePasswordRequest;
+import com.example.rest.rest.login.request.LoginRequest;
 import com.example.rest.services.users.UsersService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

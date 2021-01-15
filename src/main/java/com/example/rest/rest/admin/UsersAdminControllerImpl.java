@@ -1,10 +1,10 @@
 package com.example.rest.rest.admin;
 
-import com.example.rest.services.users.UserDataResponse;
+import com.example.rest.rest.admin.response.UserDataResponse;
 import com.example.rest.services.users.UsersService;
-import com.example.rest.services.users.CreateUserRequest;
-import com.example.rest.services.users.SetUserDataRequest;
-import com.example.rest.services.users.exceptions.UserNotFoundException;
+import com.example.rest.rest.admin.request.CreateUserRequest;
+import com.example.rest.rest.admin.request.SetUserDataRequest;
+import com.example.rest.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

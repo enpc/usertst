@@ -1,4 +1,4 @@
-package com.example.rest.services.users;
+package com.example.rest.rest.admin.request;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;

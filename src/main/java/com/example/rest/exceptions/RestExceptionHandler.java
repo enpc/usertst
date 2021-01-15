@@ -1,7 +1,7 @@
-package com.example.rest.rest.exceptions;
+package com.example.rest.exceptions;
 
-import com.example.rest.services.users.exceptions.UserNotFoundException;
-import com.example.rest.services.users.exceptions.UserParametersException;
+import com.example.rest.exceptions.UserNotFoundException;
+import com.example.rest.exceptions.UserParametersException;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

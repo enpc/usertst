@@ -1,7 +1,7 @@
 package com.example.rest.rest.contact;
 
-import com.example.rest.services.contact.ContactRequest;
-import com.example.rest.services.contact.ContactResponse;
+import com.example.rest.rest.contact.request.ContactRequest;
+import com.example.rest.rest.contact.response.ContactResponse;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;

@@ -1,4 +1,4 @@
-package com.example.rest.services.users.impl;
+package com.example.rest.services.users.config;
 
 import org.mapstruct.factory.Mappers;
 import org.springframework.context.annotation.Bean;

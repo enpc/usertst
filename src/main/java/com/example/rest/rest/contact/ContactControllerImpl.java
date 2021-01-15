@@ -1,9 +1,8 @@
 package com.example.rest.rest.contact;
 
-import com.example.rest.services.contact.ContactRequest;
-import com.example.rest.services.contact.ContactResponse;
+import com.example.rest.rest.contact.request.ContactRequest;
+import com.example.rest.rest.contact.response.ContactResponse;
 import com.example.rest.services.contact.ContactService;
-import com.example.rest.services.users.exceptions.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

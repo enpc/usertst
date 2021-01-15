@@ -1,4 +1,4 @@
-package com.example.rest.services.users;
+package com.example.rest.rest.admin.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.example.rest.services.contact;
+package com.example.rest.rest.contact.request;
 
 import lombok.Builder;
 import lombok.Data;

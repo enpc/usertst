@@ -1,7 +1,7 @@
 package com.example.rest.rest.login;
 
-import com.example.rest.services.users.ChangePasswordRequest;
-import com.example.rest.services.users.LoginRequest;
+import com.example.rest.rest.login.request.ChangePasswordRequest;
+import com.example.rest.rest.login.request.LoginRequest;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
